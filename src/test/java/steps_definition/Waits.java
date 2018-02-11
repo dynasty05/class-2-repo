@@ -1,14 +1,15 @@
 package steps_definition;
 
+import com.google.common.base.Function;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -74,6 +75,59 @@ public class Waits {
         WebElement periodicElement = wait.until(ExpectedConditions.elementToBeClickable(By.id("periodicElement")));
         String elementHTML = periodicElement.getAttribute("outerHTML");
         System.out.println("Explicit wait found element with HTML: " + elementHTML);
+    }
+
+    @Then("^I set explicit wait block on on alert present$")
+    public void i_set_explicit_wait_block_on_on_alert_present() {
+        // Initialise wait object
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+
+        // invoke the action that causes an asynchronous call.
+        driver.findElement(By.id("timingAlert")).click();
+
+        // Wait until an expected condition. Note: an Alert is not a WebElement.
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        System.out.println("Found alert");
+
+        // dismiss the alert
+        alert.accept();
+    }
+
+    @Then("^I wait until I find five periodicElements$")
+    public void i_wait_until_I_find_five_periodicElements() {
+        // Instantiate the fluent wait that is tied to a driver type
+        FluentWait<WebDriver> flexibleWait = new FluentWait<WebDriver>(driver);
+        // set the timeout and polling interval on the wait object.
+        // Note: like webdriver wait, fluent wait needs a driver object and a timeout.
+        flexibleWait.withTimeout(30, TimeUnit.SECONDS);
+        flexibleWait.pollingEvery(2, TimeUnit.SECONDS);
+
+        // set the exceptions to be ignored during the wait
+        flexibleWait.ignoring(NoSuchElementException.class);
+        flexibleWait.ignoring(StaleElementReferenceException.class);
+
+        // specify the expected condition or function. Wait stops when function returns a non-null
+        // object or timeout is reached.
+        flexibleWait.until(new Function<WebDriver, List<WebElement>>(){
+            // logic of fulfilled expectations goes here
+            public List<WebElement> apply(WebDriver d) {
+                // the exact UI element(s) we want to wait for.
+                List<WebElement> elements = driver.findElements(By.id("periodicElement"));
+
+                // expectation is fulfilled if there are 5 elements in the list
+                if(elements.size() == 5){
+                    System.out.println("Target length is reached");
+                    return elements;
+
+                } else {
+                    System.out.println("Not reached target length. Continue waiting ...");
+                    return null;
+                }
+            }
+        });
+
+
+
     }
 
 }
