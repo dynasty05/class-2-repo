@@ -68,10 +68,10 @@ public class Waits {
         // apply to every element regardless of the wait necessary on it.
         // Here goes:
 
-        // The wait object initialised with the timeout and driver
+        // The wait object initialised with the timeout and driver. Similar to XCTWaiter in XCTest.
         WebDriverWait wait = new WebDriverWait(driver, 5);
         // waiter repeatedly waits for the expected condition to become true for 5 seconds
-        // failing which it throws a TimeoutException.
+        // failing which it throws a TimeoutException. Expected Condition is like Expectations in XCTest.
         WebElement periodicElement = wait.until(ExpectedConditions.elementToBeClickable(By.id("periodicElement")));
         String elementHTML = periodicElement.getAttribute("outerHTML");
         System.out.println("Explicit wait found element with HTML: " + elementHTML);
@@ -107,7 +107,8 @@ public class Waits {
         flexibleWait.ignoring(StaleElementReferenceException.class);
 
         // specify the expected condition or function. Wait stops when function returns a non-null
-        // object or timeout is reached.
+        // object or timeout is reached. The object returned [must] be the object being waited for.
+        // The Function spells out the expectation.
         flexibleWait.until(new Function<WebDriver, List<WebElement>>(){
             // logic of fulfilled expectations goes here
             public List<WebElement> apply(WebDriver d) {
