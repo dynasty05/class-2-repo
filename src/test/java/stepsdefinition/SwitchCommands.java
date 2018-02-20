@@ -102,6 +102,25 @@ public class SwitchCommands {
         }
         // assert on the page title of the new tab
         Assert.assertEquals(driver.getTitle(), "Selenium Framework | Selenium, Cucumber, Ruby, Java et al.");
+    }
+
+    @When("^I click alert button$")
+    public void i_click_alert_button() throws Throwable {
+        driver.findElement(By.id("alert")).click();
+    }
+
+    @Then("^I switch to alert and accept$")
+    public void i_switch_to_alert_and_accept() throws Throwable {
+        // TODO: 1. read up on TargetLocator and Alert.
+        // 2. Find out how to locate the javascript code referenced in a HTML element
+        Alert alert = driver.switchTo().alert();
+
+        // Note that an Alert is not a window, as can be seen below:
+        System.out.println("There are only " + driver.getWindowHandles() + " windows open");
+
+        // click the OK button on the Alert
+        alert.accept();
 
     }
+
 }

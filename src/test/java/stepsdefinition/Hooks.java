@@ -39,7 +39,7 @@ public class Hooks {
             scenario.embed(image, "img/png");
         }
 
-        // invalidate the WebDriver instance for Scenario just concluded
+        // invalidate the WebDriver instance for Scenario just concluded, closing all open windows and tabs
         driver.quit();
     }
 }
