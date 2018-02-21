@@ -120,6 +120,30 @@ public class SwitchCommands {
 
         // click the OK button on the Alert
         alert.accept();
+    }
+
+    @When("^I open yourhtmlsource website$")
+    public void i_open_yourhtmlsource_website() throws Throwable {
+        driver.get("http://www.yourhtmlsource.com/frames/inlineframes.html");
+    }
+
+    @When("^I switch to frame with name bomb$")
+    public void i_switch_to_frame_with_name_bomb() throws Throwable {
+        // switch to an iframe in the DOM with name attribute: bomb
+        // Note: for refresher on frames, see http://www.yourhtmlsource.com/frames/inlineframes.html
+        driver.switchTo().frame("bomb");
+
+        // get the html body of the resource contained in the frame
+        WebElement frameBody = driver.findElement(By.tagName("body"));
+        System.out.println("BODY IN FRAME: " + frameBody.getText());
+
+    }
+
+    @Then("^I print the text and switch back to parent$")
+    public void i_print_the_text_and_switch_back_to_parent() throws Throwable {
+        // switch back to the main DOM that contained the iframe
+        driver.switchTo().parentFrame();
+        System.out.println(driver.findElement(By.linkText("Full Index")).getText());
 
     }
 
