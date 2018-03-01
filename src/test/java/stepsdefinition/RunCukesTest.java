@@ -10,6 +10,6 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = {"classpath:features"},
                  plugin = {"pretty", "html:reports/cucumber-html-reports.html", "json:reports/cucumber-json-reports.json"},
-                 tags = {"@parallel, @fast"})
+                 tags = {"@wip,@fast"})
 public class RunCukesTest {
 }
