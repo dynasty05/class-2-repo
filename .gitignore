@@ -1,0 +1,9 @@
+target/
+.idea/
+.classpath
+*.iml
+/.settings/
+/test-results/
+/test-output/
+/lib
+notes.txt
