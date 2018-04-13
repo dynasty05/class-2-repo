@@ -63,6 +63,7 @@ public class JSONExamples {
         Employee emp = new Gson().fromJson(sb.toString(), Employee.class);
 
         // TODO: Read up Gson (fromJson) documentation
+        // TODO: Do you serialise from a regular java object or from a JSON object?
     }
 
     @When("^I read json string from a file$")
@@ -92,6 +93,7 @@ public class JSONExamples {
         // 1.) The desc key has a value that is also a JsonObject
         JsonObject descriptionObject = (JsonObject)jsonObject.get("desc");
         // 2.) Accessing the JsonElements in the descriptionObject
+        // TODO: Can a JsonElement not also qualify as a JsonObject?
         JsonElement someKeyValue = descriptionObject.get("someKey");
         System.out.println("somekey value in Description object >> " + someKeyValue.getAsString());
 
